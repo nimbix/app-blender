@@ -11,5 +11,6 @@ RUN curl -o blender-2.77a-linux-glibc211-x86_64.tar.bz2 http://mirror.cs.umn.edu
 RUN tar xjf blender-2.77a-linux-glibc211-x86_64.tar.bz2 && rm -f blender-2.77a-linux-glibc211-x86_64.tar.bz2
 
 ADD ./scripts /usr/local/scripts
+ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
 
 CMD ["/usr/local/scripts/start.sh"]
