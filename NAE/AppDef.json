@@ -1,0 +1,55 @@
+{
+    "commands": {
+        "interactive": {
+            "path": "/usr/local/scripts/start.sh",
+            "interactive": true,
+            "description": "Launch interactive Workbench in your browser.",
+            "name": "Blender Interactive",
+            "parameters": {
+                "version": {
+                    "name": "Version",
+                    "type": "CONST",
+                    "value": "blender-2.77a-linux-glibc211-x86_64",
+                    "required": true,
+                    "positional": true
+                },
+                "gpus": {
+                    "name": "GPU count",
+                    "type": "CONST",
+                    "value": "%GPUS%",
+                    "required": true,
+                    "positional": true
+                }
+            }
+        }
+    },
+    "classifications": [
+        "Rendering"
+    ],
+    "description": "Application details Blender is a 3D animation suite. It supports the entirety of the 3D pipeline - modeling, rigging, animation, simulation, rendering, compositing and motion tracking, even video editing and game creation. You can leverage the power of supercomputing GPUs to speed up render times by as much as 60-100x.",
+    "author": "Blender.org",
+    "image": {
+        "type": "image/png",
+        "data": "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"
+    },
+    "vault-types": [
+        "FILE",
+        "BLOCK"
+    ],
+    "licensed": true,
+    "nae": "app-blender.app",
+    "machines": [
+        "n3",
+        "n2",
+        "ngd5",
+        "ngd4",
+        "ngd3",
+        "ngd2",
+        "ng5",
+        "ng4",
+        "ng3",
+        "ng2"
+    ],
+    "scale_max": 1,
+    "name": "Blender"
+}

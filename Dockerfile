@@ -13,4 +13,5 @@ RUN tar xjf blender-2.77a-linux-glibc211-x86_64.tar.bz2 && rm -f blender-2.77a-l
 ADD ./scripts /usr/local/scripts
 ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
 
+COPY ./NAE/AppDef.json /etc/NAE/AppDef.json
 CMD ["/usr/local/scripts/start.sh"]
