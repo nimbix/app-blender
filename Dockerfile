@@ -14,4 +14,3 @@ ADD ./scripts /usr/local/scripts
 ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
 
 COPY ./NAE/AppDef.json /etc/NAE/AppDef.json
-CMD ["/usr/local/scripts/start.sh"]
