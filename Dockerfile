@@ -14,7 +14,7 @@ RUN apt-get -y update && \
 WORKDIR /opt/blender
 
 # Download from a mirror site
-RUN curl -o blender.tgz https://mirror.clarkson.edu/blender/release/Blender2.83/blender-2.83.0-linux64.tar.xz && \
+RUN curl -o blender.tgz https://download.blender.org/release/Blender2.83/blender-2.83.0-linux64.tar.xz && \
     tar xf blender.tgz --strip-components=1 && \
     rm -f blender.tgz
 

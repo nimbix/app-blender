@@ -20,18 +20,11 @@
   "scale_max": 1,
   "commands": {
     "interactive": {
-      "path": "/usr/local/bin/nimbix_desktop",
+      "path": "/usr/local/scripts/start.sh",
       "interactive": true,
       "description": "Launch interactive Workbench in your browser",
       "name": "Blender Interactive",
       "parameters": {
-        "command": {
-          "name": "command",
-          "type": "CONST",
-          "value": "/usr/local/scripts/start.sh",
-          "required": true,
-          "positional": true
-        },
         "-gpus": {
           "name": "GPU count",
           "type": "CONST",

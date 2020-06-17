@@ -19,4 +19,4 @@ done
 . $(dirname "$0")/setenv.sh "$GPU_COUNT"
 
 # start the GUI with the GPU renderer enabled or the software rendering version
-exec /opt/blender/blender${SOFTWARE_RENDER} -noaudio
+exec /usr/local/bin/nimbix_desktop /opt/blender/blender${SOFTWARE_RENDER} -noaudio
