@@ -1,17 +1,26 @@
-FROM nimbix/ubuntu-desktop:trusty
-MAINTAINER stephen.fox@nimbix.net
+FROM ubuntu:bionic
+LABEL maintainer="Nimbix, Inc."
 
-ENV INSTALL_ROOT=/opt/blender
+# Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
+ARG SERIAL_NUMBER
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20200616.1800}
 
-RUN mkdir -p ${INSTALL_ROOT}
-WORKDIR ${INSTALL_ROOT}
-RUN apt-get update && apt-get install -y curl
-RUN curl -o blender-2.77a-linux-glibc211-x86_64.tar.bz2 http://mirror.cs.umn.edu/blender.org/release/Blender2.77/blender-2.77a-linux-glibc211-x86_64.tar.bz2
+RUN apt-get -y update && \
+    apt-get -y install curl && \
+    curl -H 'Cache-Control: no-cache' \
+        https://raw.githubusercontent.com/nimbix/image-common/master/install-nimbix.sh \
+        | bash -s -- --setup-nimbix-desktop
 
-RUN tar xjf blender-2.77a-linux-glibc211-x86_64.tar.bz2 && rm -f blender-2.77a-linux-glibc211-x86_64.tar.bz2
+WORKDIR /opt/blender
 
-ADD ./scripts /usr/local/scripts
-ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
+# Download from a mirror site
+RUN curl -o blender.tgz https://mirror.clarkson.edu/blender/release/Blender2.83/blender-2.83.0-linux64.tar.xz && \
+    tar xf blender.tgz --strip-components=1 && \
+    rm -f blender.tgz
 
-COPY ./NAE/AppDef.json /etc/NAE/AppDef.json
-COPY ./NAE/screenshot.png /etc/NAE/screenshot.png
+COPY scripts /usr/local/scripts
+
+COPY NAE/AppDef.json /etc/NAE/AppDef.json
+RUN curl --fail -X POST -d @/etc/NAE/AppDef.json https://api.jarvice.com/jarvice/validate
+
+COPY NAE/screenshot.png /etc/NAE/screenshot.png
