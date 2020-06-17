@@ -3,6 +3,8 @@
 ## TODO: Use slave.blend config and start on other hosts in cluster
 # for network rendering
 
+SOFTWARE_RENDER=
+GPU_COUNT=0
 while [ -n "$1" ]; do
   case "$1" in
   -gpus)
@@ -14,8 +16,7 @@ while [ -n "$1" ]; do
   shift
 done
 
-SOFTWARE_RENDER=
-
 . $(dirname "$0")/setenv.sh "$GPU_COUNT"
 
-exec /opt/blender/blender${SOFTWARE_RENDER} -W -noaudio
+# start the GUI with the GPU renderer enabled or the software rendering version
+exec /opt/blender/blender${SOFTWARE_RENDER} -noaudio

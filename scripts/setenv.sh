@@ -1,6 +1,3 @@
-if [[ -x /usr/sbin/sshd ]]; then
-  sudo /usr/sbin/sshd-keygen && sudo /usr/sbin/sshd
-fi
 
 GPU_COUNT=$1
 

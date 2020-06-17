@@ -6,7 +6,7 @@ ARG SERIAL_NUMBER
 ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20200616.1800}
 
 RUN apt-get -y update && \
-    apt-get -y install curl && \
+    apt-get -y install curl ca-certificates && \
     curl -H 'Cache-Control: no-cache' \
         https://raw.githubusercontent.com/nimbix/image-common/master/install-nimbix.sh \
         | bash -s -- --setup-nimbix-desktop
