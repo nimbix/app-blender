@@ -6,10 +6,12 @@ mkdir -p "$HOME"/.config
 
 ln -sf /data/AppConfig/blender "$HOME"/.config/blender
 
+[ -f /etc/JARVICE/vglinfo.sh ] && . /etc/JARVICE/vglinfo.sh || true
+
 export TMP=/tmp
 export TMPDIR=/tmp
 
-if [ "$GPU_COUNT" -lt 1 ]; then
+if [ -z "$VGL_DISPLAY" ]; then
     SOFTWARE_RENDER="-softwaregl"
     export SOFTWARE_RENDER
 fi
