@@ -1,6 +1,4 @@
 
-GPU_COUNT=$1
-
 mkdir -p /data/AppConfig/blender
 mkdir -p "$HOME"/.config
 
