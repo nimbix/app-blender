@@ -21,7 +21,7 @@ RUN curl -o blender.tgz https://download.blender.org/release/Blender3.3/blender-
 COPY scripts /usr/local/scripts
 
 COPY NAE/AppDef.json /etc/NAE/AppDef.json
-RUN curl --fail -X POST -d @/etc/NAE/AppDef.json https://cloud.nimbix.net/api/jarvice/validate
+#RUN curl --fail -X POST -d @/etc/NAE/AppDef.json https://cloud.nimbix.net/api/jarvice/validate
 
 COPY NAE/screenshot.png /etc/NAE/screenshot.png
 
