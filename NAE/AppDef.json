@@ -11,26 +11,17 @@
     "BLOCK"
   ],
   "machines": [
-    "nc*",
-    "ng*",
-    "n[2-9]*",
-    "n[1-9][0-9]*"
+    "*"
   ],
   "scale_max": 1,
   "commands": {
     "interactive": {
-      "path": "/usr/local/bin/nimbix_desktop",
-      "interactive": true,
+      "path": "/tmp/start.sh",
+      "desktop": true,
+      "cmdscript": "IyEvYmluL2Jhc2gKCiMjIFRPRE86IFVzZSBzbGF2ZS5ibGVuZCBjb25maWcgYW5kIHN0YXJ0IG9uIG90aGVyIGhvc3RzIGluIGNsdXN0ZXIKIyBmb3IgbmV0d29yayByZW5kZXJpbmcKClNPRlRXQVJFX1JFTkRFUj0KCm1rZGlyIC1wIC9kYXRhL0FwcENvbmZpZy9ibGVuZGVyCm1rZGlyIC1wICIkSE9NRSIvLmNvbmZpZwoKbG4gLXNmIC9kYXRhL0FwcENvbmZpZy9ibGVuZGVyICIkSE9NRSIvLmNvbmZpZy9ibGVuZGVyCgpbIC1mIC9ldGMvSkFSVklDRS92Z2xpbmZvLnNoIF0gJiYgLiAvZXRjL0pBUlZJQ0UvdmdsaW5mby5zaCB8fCB0cnVlCgpleHBvcnQgVE1QPS90bXAKZXhwb3J0IFRNUERJUj0vdG1wCgppZiBbIC16ICIkVkdMX0RJU1BMQVkiIF07IHRoZW4KICAgIFNPRlRXQVJFX1JFTkRFUj0iLXNvZnR3YXJlZ2wiCiAgICBleHBvcnQgU09GVFdBUkVfUkVOREVSCmZpCgojIHN0YXJ0IHRoZSBHVUkgd2l0aCB0aGUgR1BVIHJlbmRlcmVyIGVuYWJsZWQgb3IgdGhlIHNvZnR3YXJlIHJlbmRlcmluZyB2ZXJzaW9uCmV4ZWMgL29wdC9ibGVuZGVyL2JsZW5kZXIke1NPRlRXQVJFX1JFTkRFUn0gLW5vYXVkaW8KCg==",
       "description": "Launch interactive Blender in your browser",
       "name": "Blender Interactive",
-      "parameters": {
-        "blender",
-          "name": "blender",
-          "type": "CONST",
-          "required": true,
-          "positional": true,
-          "value": "/usr/local/scripts/start.sh"
-      }
+      "parameters": {}
     }
   },
   "image": {
