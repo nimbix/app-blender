@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:jammy
 LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
@@ -14,7 +14,7 @@ RUN apt-get -y update && \
 WORKDIR /opt/blender
 
 # Download from a mirror site
-RUN curl -o blender.tgz https://download.blender.org/release/Blender3.3/blender-3.3.0-linux-x64.tar.xz && \
+RUN curl -o blender.tgz https://mirrors.ocf.berkeley.edu/blender/release/Blender3.3/blender-3.3.1-linux-x64.tar.xz && \
     tar xf blender.tgz --strip-components=1 && \
     rm -f blender.tgz
 

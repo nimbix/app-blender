@@ -24,12 +24,13 @@
       "description": "Launch interactive Blender in your browser",
       "name": "Blender Interactive",
       "parameters": {
-        "blender",
+        "command":{
           "name": "blender",
           "type": "CONST",
           "required": true,
           "positional": true,
           "value": "/usr/local/scripts/start.sh"
+        }
       }
     }
   },
