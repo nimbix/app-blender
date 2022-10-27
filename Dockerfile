@@ -1,9 +1,9 @@
-FROM ubuntu:bionic
+FROM ubuntu:focal
 LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20200616.1800}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20220908.1800}
 
 RUN apt-get -y update && \
     apt-get -y install curl ca-certificates && \
@@ -14,7 +14,7 @@ RUN apt-get -y update && \
 WORKDIR /opt/blender
 
 # Download from a mirror site
-RUN curl -o blender.tgz https://download.blender.org/release/Blender3.2/blender-3.2.0-linux-x64.tar.xz && \
+RUN curl -o blender.tgz https://download.blender.org/release/Blender3.3/blender-3.3.0-linux-x64.tar.xz && \
     tar xf blender.tgz --strip-components=1 && \
     rm -f blender.tgz
 
