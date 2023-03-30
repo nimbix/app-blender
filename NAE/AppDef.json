@@ -1,11 +1,12 @@
 {
-  "name": "Blender&reg;",
+  "name": "Blender&reg; 3.5.0",
   "description": "Blender is the free and open source 3D creation suite. It supports the entirety of the 3D pipeline—modeling, rigging, animation, simulation, rendering, compositing and motion tracking, video editing and 2D animation pipeline.",
   "author": "Blender Foundation",
   "classifications": [
     "Rendering"
   ],
   "licensed": true,
+  "appdefversion": 2,
   "vault-types": [
     "FILE",
     "BLOCK"
@@ -19,18 +20,12 @@
   "scale_max": 1,
   "commands": {
     "interactive": {
-      "path": "/usr/local/bin/nimbix_desktop",
+      "path": "/usr/local/scripts/start.sh",
       "interactive": true,
+      "desktop": true,
       "description": "Launch interactive Blender in your browser",
       "name": "Blender Interactive",
-      "parameters": {
-        "blender",
-          "name": "blender",
-          "type": "CONST",
-          "required": true,
-          "positional": true,
-          "value": "/usr/local/scripts/start.sh"
-      }
+      "parameters": {}
     }
   },
   "image": {
