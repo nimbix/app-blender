@@ -17,9 +17,9 @@ simulation, rendering, compositing and motion tracking, video editing and 2D ani
     * Can select to render using CPU, GPU, and CPU+GPU
     * Can select the number of GPUs to use
     * Current Benchmarking Renders
-        * [Aperture](https://cloud.blender.org/p/gallery/5891c75149932b00185a03f1)
+        * [Aperture](https://cloud.blender.org/p/gallery/5891c75149932b00185a03f1) (File from Midge "Mantissa" Sinnaeve)
             * GPU benchmark
-        * [RyzenGraphic_27](http://download.amd.com/demo/RyzenGraphic_27.blend)
+        * [RyzenGraphic_27](http://download.amd.com/demo/RyzenGraphic_27.blend) (File from AMD)
             * CPU benchmark released by AMD for the zen cpu release
     * Current Options
         * `-renderFile` - One of the above images to render
