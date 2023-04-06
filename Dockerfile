@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20230330.1000}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20230403.1000}
 
 RUN apt-get -y update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates curl --no-install-recommends && \
@@ -19,6 +19,7 @@ RUN curl -o blender.tgz https://mirrors.ocf.berkeley.edu/blender/release/Blender
     rm -f blender.tgz
 
 COPY scripts /usr/local/scripts
+COPY benchmark /opt/blender/benchmark
 
 COPY NAE/AppDef.json /etc/NAE/AppDef.json
 RUN curl --fail -X POST -d @/etc/NAE/AppDef.json https://cloud.nimbix.net/api/jarvice/validate

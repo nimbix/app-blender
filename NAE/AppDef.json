@@ -26,6 +26,63 @@
       "description": "Launch interactive Blender in your browser",
       "name": "Blender Interactive",
       "parameters": {}
+    },
+    "benchmark": {
+      "path": "/opt/blender/benchmark/benchmark.sh",
+      "interactive": false,
+      "description": "Run a benchmark to test a systems CPU and/or GPU(s)",
+      "name": "Blender Benchmark",
+      "parameters": {
+        "-renderFile": {
+          "name": "Render Image",
+          "type": "selection",
+          "required": true,
+          "positional": false,
+          "description": "Choose which image to render. Check README.md for description of files",
+          "values": [
+            "Aperture",
+            "Ryzen CPU"
+          ],
+          "mvalues": [
+            "Aperture",
+            "RyzenGraphic_27"
+          ]
+        },
+        "-enableCPU": {
+          "name": "Enable CPU",
+          "type": "BOOL",
+          "required": true,
+          "positional": false,
+          "description": "Use CPU durring the rendering.",
+          "value": false
+        },
+        "-disableGPU": {
+          "name": "Disable GPU",
+          "type": "BOOL",
+          "required": true,
+          "positional": false,
+          "description": "Disable GPU durring the rendering.",
+          "value": false
+        },
+        "-gpucount": {
+          "name": "Number of GPUs",
+          "type": "CONST",
+          "required": true,
+          "positional": false,
+          "value": "%GPUS%",
+          "description": "Use the number of GPUs to determine if hardware OpenGL acceleration is available"
+        },
+        "-maxNumGpu": {
+          "name": "-maxNumGpu",
+          "type": "INT",
+          "required": false,
+          "positional": false,
+          "value": 0,
+          "min": 0,
+          "max": 64,
+          "description": "Set the max number of GPUs to use."
+        }
+      }
     }
   },
   "image": {
