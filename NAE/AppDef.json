@@ -1,5 +1,5 @@
 {
-  "name": "Blender&reg; 3.5.0",
+  "name": "Blender&reg; 3.6.1",
   "description": "Blender is the free and open source 3D creation suite. It supports the entirety of the 3D pipeline—modeling, rigging, animation, simulation, rendering, compositing and motion tracking, video editing and 2D animation pipeline.",
   "author": "Blender Foundation",
   "classifications": [
@@ -71,16 +71,6 @@
           "positional": false,
           "value": "%GPUS%",
           "description": "Use the number of GPUs to determine if hardware OpenGL acceleration is available"
-        },
-        "-maxNumGpu": {
-          "name": "-maxNumGpu",
-          "type": "INT",
-          "required": false,
-          "positional": false,
-          "value": 0,
-          "min": 0,
-          "max": 64,
-          "description": "Set the max number of GPUs to use."
         }
       }
     }

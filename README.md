@@ -26,7 +26,6 @@ simulation, rendering, compositing and motion tracking, video editing and 2D ani
         * `-enableCPU` - Allows th CPU to be used for the render
         * `-disableGPU` - Disables the GPU allowing only CPU benchmarks
         to be ran
-        * `-maxNumGpu` - (Optional) Sets the max number of GPUs to be used
 
 ## Images
 

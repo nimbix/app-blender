@@ -32,6 +32,10 @@
 [[ -r /etc/JARVICE/jobenv.sh ]] && source /etc/JARVICE/jobenv.sh
 [[ -r /etc/JARVICE/jobinfo.sh ]] && source /etc/JARVICE/jobinfo.sh
 
+mkdir -p /data/AppConfig/blender
+mkdir -p "$HOME"/.config
+ln -sf /data/AppConfig/blender "$HOME"/.config/blender
+
 set -e
 
 [[ -z "$JOB_NAME" ]] && JOB_NAME="local" || true
@@ -43,7 +47,7 @@ STARTING_DIRECTORY=${PWD}
 mkdir -p $CASE
 cd $CASE
 
-BLENDER_FILE_LOCATION="/opt/blender/benchmark/render_files/"
+BLENDER_FILE_LOCATION="/opt/blender/benchmark/render_files"
 
 RENDER_FILE=""
 USE_CPU="false"
@@ -102,15 +106,17 @@ echo "Using $RENDER_FILE" | tee -a benchmark.log
 stime=$(date '+%s%3N')
 set -x
 /opt/blender/blender \
+    --factory-startup \
     --background \
-    -P /opt/blender/benchmark/gpuSelection.py \
     ${BLENDER_FILE_LOCATION}/${RENDER_FILE}.blend \
+    --python /opt/blender/benchmark/gpuSelection.py \
     --render-output test_ \
     --engine CYCLES \
+    --debug-cycles \
     --render-format PNG \
     --use-extension 1 \
     --render-frame 1 \
-    -- $NUM_CPU $NUM_GPU | tee -a benchmark.log
+    -- $NUM_CPU $NUM_GPU
 ERR=$?
 set +x
 etime=$(date '+%s%3N')
@@ -125,3 +131,16 @@ SOLVER_SCORE=$(perl -e "print int(8640000000.0/$dt_solver+0.99)/100")
 
 echo "BENCHMARK INFO: Render finished in ${dt_solver_seconds} seconds" | tee -a benchmark.log
 echo "BENCHMARK INFO: Render Score = ${SOLVER_SCORE}" | tee -a benchmark.log
+
+# Python script is not setting the correct number of gpus to use.
+# ,
+# "-maxNumGpu": {
+#     "name": "-maxNumGpu",
+#     "type": "INT",
+#     "required": false,
+#     "positional": false,
+#     "value": 0,
+#     "min": 0,
+#     "max": 64,
+#     "description": "Set the max number of GPUs to use."
+# }
