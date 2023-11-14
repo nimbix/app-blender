@@ -14,7 +14,7 @@ RUN apt-get -y update && \
 WORKDIR /opt/blender
 
 # Download from a mirror site
-RUN curl -o blender.tgz https://mirrors.ocf.berkeley.edu/blender/release/Blender3.6/blender-3.6.5-linux-x64.tar.xz && \
+RUN curl -o blender.tgz https://mirrors.ocf.berkeley.edu/blender/release/Blender4.0/blender-4.0.0-linux-x64.tar.xz && \
     tar xf blender.tgz --strip-components=1 && \
     rm -f blender.tgz
 
