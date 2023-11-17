@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20231019.1000}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20231117.1000}
 
 RUN apt-get -y update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates curl --no-install-recommends && \
@@ -14,7 +14,7 @@ RUN apt-get -y update && \
 WORKDIR /opt/blender
 
 # Download from a mirror site
-RUN curl -o blender.tgz https://mirrors.ocf.berkeley.edu/blender/release/Blender3.6/blender-3.6.5-linux-x64.tar.xz && \
+RUN curl -o blender.tgz https://mirrors.ocf.berkeley.edu/blender/release/Blender4.0/blender-4.0.1-linux-x64.tar.xz && \
     tar xf blender.tgz --strip-components=1 && \
     rm -f blender.tgz
 
