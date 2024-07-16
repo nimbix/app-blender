@@ -71,6 +71,20 @@
           "positional": false,
           "value": "%GPUS%",
           "description": "Use the number of GPUs to determine if hardware OpenGL acceleration is available"
+        },
+        "DEBUG_CYCLES": {
+          "name": "Debug Cycles",
+          "type": "BOOL",
+          "variable": true,
+          "required": false,
+          "value": false
+        },
+        "DEBUG_GPU": {
+          "name": "Debug GPU",
+          "type": "BOOL",
+          "variable": true,
+          "required": false,
+          "value": false
         }
       }
     }

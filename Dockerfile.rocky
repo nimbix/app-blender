@@ -1,4 +1,4 @@
-FROM rockylinux:9
+FROM rockylinux/rockylinux:9
 LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)

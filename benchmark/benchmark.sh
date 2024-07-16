@@ -51,10 +51,8 @@ BLENDER_FILE_LOCATION="/opt/blender/benchmark/render_files"
 
 RENDER_FILE=""
 USE_CPU="false"
-NUM_CPU=0
 USE_GPU="true"
-NUM_GPU=0
-MAX_NUM_GPU=0
+NUM_GPU="0"
 while [[ -n "$1" ]]; do
     case "$1" in
     -renderFile)
@@ -71,12 +69,8 @@ while [[ -n "$1" ]]; do
         shift
         NUM_GPU="$1"
         ;;
-    -maxNumGpu)
-        shift
-        MAX_NUM_GPU="$1"
-        ;;
     *)
-        echo "Invalid argument: $1" >&2
+        echo "ERROR: Invalid argument: $1" >&2
         exit 1
         ;;
     esac
@@ -84,41 +78,74 @@ while [[ -n "$1" ]]; do
 done
 
 if [[ $USE_CPU == "false" && $USE_GPU == "false" ]]; then
-    echo "Both CPU and GPU disabled..."
-    echo "Stopping..."
+    echo "ERROR: Both CPU and GPU disabled..."
+    echo "       Stopping..."
     exit 1
 fi
 
+if [[ $USE_GPU == "true" && $NUM_GPU == "0" ]]; then
+    echo "WARNING: No GPU detected and GPU rendering was selected."
+    echo "         Defaulting to CPU rendering."
+    USE_CPU="true"
+    USE_GPU="false"
+fi
+
+echo "INFO: Enabling Cycle Device(s)"
+CYCLE_DEVICE=""
+if [[ $USE_GPU == "true" ]]; then
+    AVAILABLE_DEVICES=$(/opt/blender/blender -b -P /opt/blender/benchmark/optix_check.py | grep -- "Available Devices:")
+    if [[ "$AVAILABLE_DEVICES" =~ "OPTIX" ]]; then
+        CYCLE_DEVICE="OPTIX"
+    elif [[ "$AVAILABLE_DEVICES" =~ "CUDA" ]]; then
+        CYCLE_DEVICE="CUDA"
+    elif [[ "$AVAILABLE_DEVICES" =~ "HIP" ]]; then
+        CYCLE_DEVICE="HIP"
+    fi
+fi
+
 if [[ $USE_CPU == "true" ]]; then
-    NUM_CPU=1
+    if [[ -n $CYCLE_DEVICE ]]; then
+        CYCLE_DEVICE="$CYCLE_DEVICE+CPU"
+    else
+        CYCLE_DEVICE="CPU"
+    fi
+fi
+echo "INFO: Found $CYCLE_DEVICE"
+
+DEBUG_LOGS=""
+if [[ -n "$DEBUG_CYCLES" ]]; then
+    DEBUG_LOGS="$DEBUG_LOGS --debug-cycles"
 fi
 
-if [[ $MAX_NUM_GPU -gt 0 && $MAX_NUM_GPU -lt $NUM_GPU ]]; then
-    NUM_GPU=$MAX_NUM_GPU
+if [[ -n "$DEBUG_GPU" ]]; then
+    DEBUG_LOGS="$DEBUG_LOGS --debug-gpu"
 fi
 
-if [[ $USE_GPU == "false" ]]; then
-    NUM_GPU=0
+if [[ $DEBUG_LOGS ]]; then
+    DEBUG_LOGS="-d $DEBUG_LOGS"
 fi
 
-echo "Using $RENDER_FILE" | tee -a benchmark.log
+echo "INFO: Using $RENDER_FILE" | tee -a benchmark.log
 
 stime=$(date '+%s%3N')
-set -x
+
+cmd="\
 /opt/blender/blender \
-    --factory-startup \
-    --background \
-    ${BLENDER_FILE_LOCATION}/${RENDER_FILE}.blend \
-    --python /opt/blender/benchmark/gpuSelection.py \
-    --render-output test_ \
-    --engine CYCLES \
-    --debug-cycles \
-    --render-format PNG \
-    --use-extension 1 \
-    --render-frame 1 \
-    -- $NUM_CPU $NUM_GPU
+--factory-startup \
+--background \
+${BLENDER_FILE_LOCATION}/${RENDER_FILE}.blend \
+--render-output test_ \
+--engine CYCLES \
+$DEBUG_LOGS \
+--render-format PNG \
+--use-extension 1 \
+--render-frame 1 \
+-- --cycles-device $CYCLE_DEVICE"
+
+echo "Running: $cmd"
+eval $cmd
 ERR=$?
-set +x
+
 etime=$(date '+%s%3N')
 if [[ $ERR -gt 0 ]]; then
     echo "BENCHMARK INFO: Render experienced an error..."
@@ -129,8 +156,8 @@ dt_solver=$((etime-stime))
 dt_solver_seconds=$(perl -e "print int(100*$dt_solver/1000 + 0.5)/100")
 SOLVER_SCORE=$(perl -e "print int(8640000000.0/$dt_solver+0.99)/100")
 
-echo "BENCHMARK INFO: Render finished in ${dt_solver_seconds} seconds" | tee -a benchmark.log
-echo "BENCHMARK INFO: Render Score = ${SOLVER_SCORE}" | tee -a benchmark.log
+echo "INFO: Render finished in ${dt_solver_seconds} seconds" | tee -a benchmark.log
+echo "INFO: Render Score = ${SOLVER_SCORE}" | tee -a benchmark.log
 
 # Python script is not setting the correct number of gpus to use.
 # ,
