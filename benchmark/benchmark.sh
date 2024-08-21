@@ -91,9 +91,10 @@ if [[ $USE_GPU == "true" && $NUM_GPU == "0" ]]; then
 fi
 
 echo "INFO: Enabling Cycle Device(s)"
+/opt/blender/blender -b -P /opt/blender/benchmark/optix_check.py -- DeviceNames | grep -- "Found:"
 CYCLE_DEVICE=""
 if [[ $USE_GPU == "true" ]]; then
-    AVAILABLE_DEVICES=$(/opt/blender/blender -b -P /opt/blender/benchmark/optix_check.py | grep -- "Available Devices:")
+    AVAILABLE_DEVICES=$(/opt/blender/blender -b -P /opt/blender/benchmark/optix_check.py -- DeviceTypes | grep -- "Available Devices:")
     if [[ "$AVAILABLE_DEVICES" =~ "OPTIX" ]]; then
         CYCLE_DEVICE="OPTIX"
     elif [[ "$AVAILABLE_DEVICES" =~ "CUDA" ]]; then
@@ -110,7 +111,7 @@ if [[ $USE_CPU == "true" ]]; then
         CYCLE_DEVICE="CPU"
     fi
 fi
-echo "INFO: Found $CYCLE_DEVICE"
+echo "INFO: Enabled $CYCLE_DEVICE"
 
 DEBUG_LOGS=""
 if [[ -n "$DEBUG_CYCLES" ]]; then
