@@ -12,9 +12,11 @@ RUN echo "max_parallel_downloads=20" >> /etc/dnf/dnf.conf
 RUN echo "fastestmirror=True" >> /etc/dnf/dnf.conf
 RUN dnf update -y --refresh
 
-RUN curl -H 'Cache-Control: no-cache' \
-    https://raw.githubusercontent.com/nimbix/jarvice-desktop/master/install-nimbix.sh \
-    | bash
+ARG BRANCH=nimbix-menu-and-panel-fix
+RUN dnf install -y ca-certificates wget wget && \
+    curl -H 'Cache-Control: no-cache' \
+        https://raw.githubusercontent.com/nimbix/jarvice-desktop/${BRANCH}/install-nimbix.sh \
+        | bash -s -- --jarvice-desktop-branch ${BRANCH}
 
 WORKDIR /opt/blender
 
