@@ -29,6 +29,7 @@
 
 
 # Source the JARVICE job environment variables
+# shellcheck disable=SC1091
 [[ -r /etc/JARVICE/jobenv.sh ]] && source /etc/JARVICE/jobenv.sh
 [[ -r /etc/JARVICE/jobinfo.sh ]] && source /etc/JARVICE/jobinfo.sh
 
@@ -38,14 +39,14 @@ ln -sf /data/AppConfig/blender "$HOME"/.config/blender
 
 set -e
 
-[[ -z "$JOB_NAME" ]] && JOB_NAME="local" || true
+[[ -z "$JOB_NAME" ]] && JOB_NAME="local"
 CASE="/data/app-benchmarks/blender/benchmark-${JOB_NAME}"
 if [[ -d "$CASE" ]]; then
-  rm -r $CASE
+  rm -r "$CASE"
 fi
-STARTING_DIRECTORY=${PWD}
-mkdir -p $CASE
-cd $CASE
+
+mkdir -p "$CASE"
+cd "$CASE"
 
 BLENDER_FILE_LOCATION="/opt/blender/benchmark/render_files"
 
@@ -144,7 +145,7 @@ $DEBUG_LOGS \
 -- --cycles-device $CYCLE_DEVICE"
 
 echo "Running: $cmd"
-eval $cmd
+eval "$cmd"
 ERR=$?
 
 etime=$(date '+%s%3N')
