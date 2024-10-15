@@ -22,9 +22,7 @@ WORKDIR /opt/blender
 
 # Download from a mirror site
 ARG URL=https://mirror.clarkson.edu/blender/release/Blender${MAJOR_MINOR}/blender-${MAJOR_MINOR}.${PATCH_VERSION}-linux-x64.tar.xz
-RUN curl -o blender.tgz ${URL} && \
-    tar xf blender.tgz --strip-components=1 && \
-    rm -f blender.tgz
+RUN curl -L $URL | tar xJ --strip-components=1
 
 COPY scripts /usr/local/scripts
 COPY benchmark /opt/blender/benchmark
