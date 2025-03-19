@@ -21,7 +21,7 @@ RUN dnf install -y ca-certificates wget wget && \
 WORKDIR /opt/blender
 
 # Download from a mirror site
-ARG URL=https://mirror.clarkson.edu/blender/release/Blender${MAJOR_MINOR}/blender-${MAJOR_MINOR}.${PATCH_VERSION}-linux-x64.tar.xz
+ARG URL=https://download.blender.org/release/Blender${MAJOR_MINOR}/blender-${MAJOR_MINOR}.${PATCH_VERSION}-linux-x64.tar.xz
 RUN curl -L $URL | tar xJ --strip-components=1
 
 COPY scripts /usr/local/scripts
@@ -30,7 +30,8 @@ COPY benchmark /opt/blender/benchmark
 COPY NAE/AppDef.json /etc/NAE/AppDef.json
 RUN sed -i s",BLENDER_VERSION,${MAJOR_MINOR}.${PATCH_VERSION}," /etc/NAE/AppDef.json
 COPY NAE/screenshot.png /etc/NAE/screenshot.png
+COPY NAE/license.txt /etc/NAE/license.txt
 RUN curl --fail -X POST -d @/etc/NAE/AppDef.json https://cloud.nimbix.net/api/jarvice/validate
 
 # pull optimization best practice for JARVICE
-RUN touch /etc/NAE/screenshot.png /etc/NAE/screenshot.txt /etc/NAE/license.txt /etc/NAE/AppDef.json
+RUN touch /etc/NAE/screenshot.png /etc/NAE/screenshot.txt /etc/NAE/license.txt /etc/NAE/AppDef.json /etc/NAE/swlicense.txt
