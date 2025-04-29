@@ -8,12 +8,8 @@ ENV SERIAL_NUMBER=${SERIAL_NUMBER}
 ARG MAJOR_MINOR
 ARG PATCH_VERSION
 
-RUN echo "max_parallel_downloads=20" >> /etc/dnf/dnf.conf
-RUN echo "fastestmirror=True" >> /etc/dnf/dnf.conf
-RUN dnf update -y --refresh
-
-ARG BRANCH=nimbix-menu-and-panel-fix
-RUN dnf install -y ca-certificates wget wget && \
+ARG BRANCH=master
+RUN dnf install -y epel-release && crb enable && dnf install -y ca-certificates wget && \
     curl -H 'Cache-Control: no-cache' \
         https://raw.githubusercontent.com/nimbix/jarvice-desktop/${BRANCH}/install-nimbix.sh \
         | bash -s -- --jarvice-desktop-branch ${BRANCH}
