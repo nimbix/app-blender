@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (c) 2024, Nimbix, Inc.
+# Copyright (c) 2025, Nimbix, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -77,6 +77,8 @@ while [[ -n "$1" ]]; do
     esac
     shift
 done
+
+export LD_LIBRARY_PATH=/opt/blender/lib:${LD_LIBRARY_PATH}
 
 echo "INFO: Found $(/opt/blender/blender --version | head -n1)"
 
