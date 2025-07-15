@@ -1,13 +1,12 @@
-MAJOR_MINOR=4.4
-PATCH_VERSION=3
+MAJOR_MINOR=4.5
+PATCH_VERSION=0
 CUR_DATE=$(shell date +%Y-%m-%d)
 IMAGE=us-docker.pkg.dev/jarvice/images/blender:$(MAJOR_MINOR).$(PATCH_VERSION)-$(CUR_DATE)
 SERIAL_NUMBER=$(CUR_DATE).1000
 all:
-	podman build \
+	docker build \
 		--pull \
 		--rm \
-		--format docker \
 		-f "Dockerfile.rocky" \
 		--build-arg MAJOR_MINOR=$(MAJOR_MINOR) \
 		--build-arg PATCH_VERSION=$(PATCH_VERSION) \
@@ -15,4 +14,4 @@ all:
 		-t $(IMAGE) "."
 
 push: all
-	podman push $(IMAGE)
+	docker push $(IMAGE)
