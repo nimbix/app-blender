@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-IMAGE=$(podman images | grep blender | head -n1 | awk '{print $1 ":" $2}')
+IMAGE=$(docker images | grep blender | head -n1 | awk '{print $1 ":" $2}')
 
-podman run -it --rm --shm-size=16g --entrypoint=bash $IMAGE -ec "
+docker run -it --rm --shm-size=16g --entrypoint=bash $IMAGE -ec "
     useradd --shell /bin/bash nimbix
     mkdir -p /home/nimbix/
     mkdir -p /data
@@ -10,14 +10,6 @@ podman run -it --rm --shm-size=16g --entrypoint=bash $IMAGE -ec "
     chown -R nimbix:nimbix /data
     mkdir -p /etc/JARVICE
     echo 127.0.0.1 > /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
     echo 127.0.0.1 >> /etc/JARVICE/cores
     echo 127.0.0.1 >> /etc/JARVICE/cores
     echo 127.0.0.1 >> /etc/JARVICE/cores
