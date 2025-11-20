@@ -17,8 +17,13 @@ RUN dnf install -y epel-release && crb enable && dnf install -y ca-certificates 
 WORKDIR /opt/blender
 
 # Download from a mirror site
-ARG URL=https://download.blender.org/release/Blender${MAJOR_MINOR}/blender-${MAJOR_MINOR}.${PATCH_VERSION}-linux-x64.tar.xz
-RUN curl -L $URL | tar xJ --strip-components=1
+# ARG URL=https://download.blender.org/release/Blender${MAJOR_MINOR}/blender-${MAJOR_MINOR}.${PATCH_VERSION}-linux-x64.tar.xz
+# ARG URL=https://download.blender.org/release/Blender5.0/blender-5.0.0-linux-x64.tar.xz
+# ARG URL=https://download.blender.org/release/Blender4.5/blender-4.5.4-linux-x64.tar.xz
+# ARG URL=https://mirror.clarkson.edu/blender/release/Blender5.0/blender-5.0.0-linux-x64.tar.xz
+# RUN curl -L $URL | tar xJ --strip-components=1
+COPY install-blender.sh /tmp/install-blender.sh
+RUN /tmp/install-blender.sh ${MAJOR_MINOR} ${PATCH_VERSION}
 
 COPY scripts /usr/local/scripts
 COPY benchmark /opt/blender/benchmark

@@ -140,7 +140,7 @@ cmd="\
 --factory-startup \
 --background \
 ${BLENDER_FILE_LOCATION}/${RENDER_FILE}.blend \
---render-output test_ \
+--render-output ${CASE}/test_ \
 --engine CYCLES \
 $DEBUG_LOGS \
 --render-format PNG \
@@ -149,8 +149,10 @@ $DEBUG_LOGS \
 -- --cycles-device $CYCLE_DEVICE"
 
 echo "Running: $cmd"
+set +e
 eval "$cmd"
 ERR=$?
+set -e
 
 etime=$(date '+%s%3N')
 if [[ $ERR -gt 0 ]]; then
@@ -164,16 +166,3 @@ SOLVER_SCORE=$(perl -e "print int(8640000000.0/$dt_solver+0.99)/100")
 
 echo "INFO: Render finished in ${dt_solver_seconds} seconds" | tee -a benchmark.log
 echo "INFO: Render Score = ${SOLVER_SCORE}" | tee -a benchmark.log
-
-# Python script is not setting the correct number of gpus to use.
-# ,
-# "-maxNumGpu": {
-#     "name": "-maxNumGpu",
-#     "type": "INT",
-#     "required": false,
-#     "positional": false,
-#     "value": 0,
-#     "min": 0,
-#     "max": 64,
-#     "description": "Set the max number of GPUs to use."
-# }
