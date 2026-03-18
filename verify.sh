@@ -17,6 +17,8 @@ docker run -it --rm --gpus all --shm-size=16g -v $PWD:/mydata:Z -v $PWD/.data:/d
     chown -R nimbix:nimbix /data
     mkdir -p /etc/JARVICE
     cp /mydata/benchmark/benchmark.sh /opt/blender/benchmark/.
+    cp /mydata/scripts/* /usr/local/scripts/.
+    cp -rf /mydata/benchmark/render_files/* /opt/blender/benchmark/render_files/.
     echo 127.0.0.1 > /etc/JARVICE/cores
     echo 127.0.0.1 >> /etc/JARVICE/cores
     echo 127.0.0.1 >> /etc/JARVICE/cores
@@ -27,16 +29,17 @@ docker run -it --rm --gpus all --shm-size=16g -v $PWD:/mydata:Z -v $PWD/.data:/d
     echo 127.0.0.1 >> /etc/JARVICE/cores
     echo 127.0.0.1 > /etc/JARVICE/nodes
     echo JOB_NAME=Local_Testing >> /etc/JARVICE/jobinfo.sh
+    chown -R nimbix:nimbix /etc/JARVICE
     su nimbix -c '
         cd \$HOME
+	    mkdir .xdg_runtime
+	    export XDG_RUNTIME_DIR=\$HOME/.xdg_runtime
+        touch \$HOME/.Xauthority
         /opt/blender/benchmark/benchmark.sh -renderFile RyzenGraphic_27 -enableCPU -disableGPU
         echo ""
         echo "=============================================================================="
         echo ""
         /opt/blender/benchmark/benchmark.sh -renderFile RyzenGraphic_27 -gpucount 1
-        # ls -lah
-        # export XDG_RUNTIME_DIR=\"\$HOME/.xdg_runtime\"
-        # mkdir -p \$XDG_RUNTIME_DIR
         # /usr/local/bin/nimbix_desktop /usr/local/scripts/start.sh
     '
 "

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (c) 2025, Nimbix, Inc.
+# Copyright (c) 2026, Nimbix, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,8 +31,16 @@
 # for network rendering
 
 SOFTWARE_RENDER=
-
+GPU_BACKEND="opengl"
 . $(dirname "$0")/setenv.sh
 
-# start the GUI with the GPU renderer enabled or the software rendering version
-exec /opt/blender/blender${SOFTWARE_RENDER} -noaudio
+
+mkdir $HOME/.xdg_runtime
+export XDG_RUNTIME_DIR=$HOME/.xdg_runtime
+
+# start the GUI with the GPU renderer enabled or the software rendering version (maybe just use - blender-launcher)
+cmd="/opt/blender/blender-launcher -noaudio"
+# cmd="/opt/blender/blender-launcher -noaudio --gpu-backend vulkan"
+# cmd="/opt/blender/blender-launcher -noaudio --gpu-backend $GPU_BACKEND"
+echo "Running: $cmd"
+$cmd
