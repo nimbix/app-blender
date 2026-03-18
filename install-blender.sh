@@ -15,6 +15,9 @@ for mirror in $MIRRORS; do
     curl -L $mirror | tar xJ --strip-components=1
     ERROR_CODE=$?
     echo "ERROR CODE: $ERROR_CODE"
+    if [[ $ERROR_CODE == 0 ]]; then
+        break
+    fi
 done
 
 if [[ $ERROR_CODE != "0" ]]; then

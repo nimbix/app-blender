@@ -164,5 +164,5 @@ dt_solver=$((etime-stime))
 dt_solver_seconds=$(perl -e "print int(100*$dt_solver/1000 + 0.5)/100")
 SOLVER_SCORE=$(perl -e "print int(8640000000.0/$dt_solver+0.99)/100")
 
-echo "INFO: Render finished in ${dt_solver_seconds} seconds" | tee -a benchmark.log
+echo "INFO: Render Finished in ${dt_solver_seconds} Seconds" | tee -a benchmark.log
 echo "INFO: Render Score = ${SOLVER_SCORE}" | tee -a benchmark.log
