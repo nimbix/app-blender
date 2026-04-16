@@ -40,6 +40,9 @@ docker run -it --rm --gpus all --shm-size=16g -v $PWD:/mydata:Z -v $PWD/.data:/d
         echo "=============================================================================="
         echo ""
         /opt/blender/benchmark/benchmark.sh -renderFile RyzenGraphic_27 -gpucount 1
-        # /usr/local/bin/nimbix_desktop /usr/local/scripts/start.sh
+	echo ""
+        echo "=============================================================================="
+        echo ""
+        /usr/local/bin/nimbix_desktop /usr/local/scripts/start.sh
     '
 "
