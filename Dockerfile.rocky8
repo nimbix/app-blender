@@ -1,0 +1,34 @@
+FROM rockylinux/rockylinux:8
+LABEL maintainer="Nimbix, Inc."
+
+# Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
+ARG SERIAL_NUMBER
+ENV SERIAL_NUMBER=${SERIAL_NUMBER}
+
+ARG MAJOR_MINOR
+ARG PATCH_VERSION
+
+# ARG BRANCH=JAR-12198-switch-from-jarvice-desktop-tigervnc-to-turbovnc
+ARG BRANCH=JAR-12198-upgrade-VirtualGL
+RUN dnf install -y epel-release && crb enable && dnf install -y ca-certificates wget && \
+    curl -H 'Cache-Control: no-cache' \
+        https://raw.githubusercontent.com/nimbix/jarvice-desktop/${BRANCH}/install-nimbix.sh \
+        | bash -s -- --jarvice-desktop-branch ${BRANCH}
+
+WORKDIR /opt/blender
+
+# Download from a mirror site
+COPY install-blender.sh /tmp/install-blender.sh
+RUN /tmp/install-blender.sh ${MAJOR_MINOR} ${PATCH_VERSION}
+
+COPY scripts /usr/local/scripts
+COPY benchmark /opt/blender/benchmark
+
+COPY NAE/AppDef.json /etc/NAE/AppDef.json
+RUN sed -i s",BLENDER_VERSION,${MAJOR_MINOR}.${PATCH_VERSION}," /etc/NAE/AppDef.json
+COPY NAE/screenshot.png /etc/NAE/screenshot.png
+COPY NAE/license.txt /etc/NAE/license.txt
+RUN curl --fail -X POST -d @/etc/NAE/AppDef.json https://cloud.nimbix.net/api/jarvice/validate
+
+# pull optimization best practice for JARVICE
+RUN touch /etc/NAE/screenshot.png /etc/NAE/screenshot.txt /etc/NAE/license.txt /etc/NAE/AppDef.json /etc/NAE/swlicense.txt

@@ -7,6 +7,8 @@ if [[ -z $IMAGE ]]; then
     exit 1
 fi
 
+echo "Using Image: $IMAGE"
+
 PORT=${1:-5902}
 
 docker run -it --rm --gpus all --shm-size=16g -v $PWD:/mydata:Z -v $PWD/.data:/data:Z -p $PORT:5902 --entrypoint=bash $IMAGE -ec "
@@ -36,13 +38,13 @@ docker run -it --rm --gpus all --shm-size=16g -v $PWD:/mydata:Z -v $PWD/.data:/d
 	    export XDG_RUNTIME_DIR=\$HOME/.xdg_runtime
         touch \$HOME/.Xauthority
         /opt/blender/benchmark/benchmark.sh -renderFile RyzenGraphic_27 -enableCPU -disableGPU
-        echo ""
-        echo "=============================================================================="
-        echo ""
+        echo \"\"
+        echo \"==============================================================================\"
+        echo \"\"
         /opt/blender/benchmark/benchmark.sh -renderFile RyzenGraphic_27 -gpucount 1
-	echo ""
-        echo "=============================================================================="
-        echo ""
+	    echo \"\"
+        echo \"==============================================================================\"
+        echo \"\"
         /usr/local/bin/nimbix_desktop /usr/local/scripts/start.sh
     '
 "
