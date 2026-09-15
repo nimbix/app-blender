@@ -32,7 +32,7 @@
 
 SOFTWARE_RENDER=
 GPU_BACKEND="opengl"
-. $(dirname "$0")/setenv.sh
+. "$(dirname "$0")/setenv.sh"
 
 
 mkdir $HOME/.xdg_runtime
